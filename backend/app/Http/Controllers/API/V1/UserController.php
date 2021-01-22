@@ -1,17 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class UserController extends BaseController
 {
+
+    public function index(Request $request)
+    {
+        return $request->user();
+    }
+
+    public function get(Request $request)
+    {
+        return $request->user();
+    }
+
     /**
-     * Display a listing of the resource.
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function create()
     {
         //
     }
@@ -34,6 +45,17 @@ class CompanyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
         //
     }
