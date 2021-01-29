@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\V1\BaseController;
 use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
+
 
     public function index(Request $request)
     {
