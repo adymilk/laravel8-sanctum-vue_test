@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TokenController extends BaseController
 {
+    public function index()
+    {
+        return view('tokens.index');
+    }
+
     public function create(Request $request)
     {
         $credentials = $request->only(['email','password']);
@@ -22,5 +27,16 @@ class TokenController extends BaseController
         }else{
             return $this->unauthorizedResponse('Login error,Please checked.');
         }
+
     }
+
+
+    public function store(Request $request)
+    {
+        $user  = $request->user();
+        $token = $user->createToken('token-name');
+        return $user;
+    }
+
+
 }

@@ -15,7 +15,6 @@ use App\Http\Controllers\API\V1\XRChartController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,15 +28,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::any('/login', [UserController::class,'login']);
+Route::any('/users', [UserController::class,'index'])->middleware('auth:sanctum');
+
+Route::any('/getTask',[TaskController::class,'index']);
+Route::any('/updateTask',[TaskController::class,'update']);
+
 Route::namespace('App\\Http\\Controllers\\API\V1')->group(function (){
-    Route::prefix('tokens')->group(function () {
-        Route::post('/create', [TokenController::class,'create']);
-    });
-
     Route::middleware(['auth:sanctum'])->group(function (){
-        Route::apiResource('user', UserController::class);
-
-        Route::post('/imr', [IMRController::class,'index']);
+        Route::post('/Imr', [IMRController::class,'index']);
         Route::post('/XRChart', [XRChartController::class,'index']);
         Route::post('/Sixpack', [SixpackController::class,'index']);
         Route::post('/Boxplot', [BoxplotController::class,'index']);
@@ -48,12 +48,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function (){
         Route::post('/NormTest', [NormTestController::class,'index']);
         Route::post('/Outlier', [OutlierController::class,'index']);
         Route::post('/Paired', [PairedController::class,'index']);
-
-        Route::any('/getTask/{token}',[TaskController::class,'index']);
-        Route::any('/updateTask/{token}',[TaskController::class,'update']);
     });
-
-
 });
 
 

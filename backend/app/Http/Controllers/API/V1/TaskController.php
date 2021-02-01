@@ -11,7 +11,6 @@ class TaskController extends BaseController
 
     public function index(Request $request)
     {
-
         return MinitabTask::where('status',0)->orderBy('create_time','desc')->first();
     }
 

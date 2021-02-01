@@ -4,84 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\V1\BaseController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class UserController extends BaseController
+class UserController extends Controller
 {
-
-
     public function index(Request $request)
     {
         return $request->user();
     }
 
-    public function get(Request $request)
+    public function login(Request $request)
     {
-        return $request->user();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $credentials = $request->only(['email','password']);
+        if (Auth::attempt($credentials)){
+            $token = $request->user()->createToken('app')->plainTextToken;;
+            return [
+                'user' => $request->user(),
+                'token' => $token,
+                'msg'=>'login success'
+            ];
+        }else{
+            return ['msg'=>'用户名或密码错误'];
+        }
     }
 }
